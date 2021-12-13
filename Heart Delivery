@@ -1,0 +1,31 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace Heart_Delivery
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            int[] neighborhood = Console.ReadLine().Split('@').Select(int.Parse).ToArray();
+            string[] cmd = Console.ReadLine().Split().ToArray();
+            int currHouse = 0;
+            while (cmd[0] != "Love!")
+            {
+                int jump = int.Parse(cmd[1]);
+                if (currHouse + jump >= neighborhood.Length) currHouse = 0;
+                else currHouse += jump;
+                neighborhood[currHouse] -= 2;
+                if (neighborhood[currHouse] == 0) Console.WriteLine($"Place {currHouse} has Valentine's day.");
+                if (neighborhood[currHouse] < 0) Console.WriteLine($"Place {currHouse} already had Valentine's day.");
+                
+                cmd = Console.ReadLine().Split();
+            }
+            Console.WriteLine($"Cupid's last position was {currHouse}.");
+            Console.WriteLine(neighborhood.All(number => number <= 0) ? "Mission was successful."
+            : $"Cupid has failed {neighborhood.Count(number => number > 0)} places.");
+                    //(!neighborhood.Any(number => number > 0)) - alter House check for valentine!
+        }
+    }
+}
